@@ -1,8 +1,9 @@
-import datetime
-
 from django.db import models
 
-from logicaldelete import managers
+try:
+    from django.utils import timezone
+except ImportError:
+    from datetime import datetime as timezonefrom logicaldelete import managers
 
 
 class Model(models.Model):
@@ -11,14 +12,14 @@ class Model(models.Model):
     delete functionality in derived models.
     """
 
-    date_created = models.DateTimeField(default=datetime.datetime.now)
-    date_modified = models.DateTimeField(default=datetime.datetime.now)
+    date_created = models.DateTimeField(default=timezone.now)
+    date_modified = models.DateTimeField(default=timezone.now)
     date_removed = models.DateTimeField(null=True, blank=True)
 
     objects = managers.LogicalDeletedManager()
 
     def active(self):
-        return self.date_removed == None
+        return self.date_removed is None
     active.boolean = True
 
     def delete(self):
