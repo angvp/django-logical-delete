@@ -1,9 +1,11 @@
 from django.db import models
+from logicaldelete import managers
 
 try:
     from django.utils import timezone
 except ImportError:
-    from datetime import datetime as timezonefrom logicaldelete import managers
+    from datetime import datetime as timezone
+
 
 
 class Model(models.Model):
