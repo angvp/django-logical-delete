@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from logicaldelete import managers
 
@@ -5,7 +6,6 @@ try:
     from django.utils import timezone
 except ImportError:
     from datetime import datetime as timezone
-
 
 
 class Model(models.Model):
@@ -36,13 +36,17 @@ class Model(models.Model):
 
         for objs_model in related_objs:
             # Retrieve all related objects
-            objs = getattr(self, objs_model).all()
+            try:
+                obj = getattr(self, objs_model)
+            except ObjectDoesNotExist, AttributeError:
+                # The attribute  or relation  may not
+                # be instanciated.
+                pass
 
-            for obj in objs:
-                # Checking if inherits from logicaldelete
-                if not issubclass(obj.__class__, Model):
-                    break
-                obj.delete()
+            # Checking if inherits from logicaldelete
+            if not issubclass(obj.__class__, Model):
+                break
+            obj.delete()
 
         # Soft delete the object
         self.date_removed = timezone.now()
