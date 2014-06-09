@@ -52,5 +52,11 @@ class Model(models.Model):
         self.date_removed = timezone.now()
         self.save()
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.date_modified = timezone.now()
+        super(Model, self).save(force_insert=False, force_update=False,
+                                using=None, update_fields=None)
+
     class Meta:
         abstract = True
