@@ -34,19 +34,21 @@ class Model(models.Model):
         related_objs = [relation.get_accessor_name() for
                         relation in self._meta.get_all_related_objects()]
 
+        # Iterate & Delete them
         for objs_model in related_objs:
             # Retrieve all related objects
             try:
-                obj = getattr(self, objs_model)
+                objs_query = getattr(self, objs_model)
+                objs = objs_query.all()
+
+                for obj in objs:
+                    # Checking if inherits from logicaldelete
+                    if issubclass(obj.__class__, Model):
+                        obj.delete()
             except ObjectDoesNotExist, AttributeError:
                 # The attribute  or relation  may not
                 # be instanciated.
                 pass
-
-            # Checking if inherits from logicaldelete
-            if not issubclass(obj.__class__, Model):
-                break
-            obj.delete()
 
         # Soft delete the object
         self.date_removed = timezone.now()
@@ -62,19 +64,21 @@ class Model(models.Model):
         related_objs = [relation.get_accessor_name() for
                         relation in self._meta.get_all_related_objects()]
 
+        # Iterate & Delete them
         for objs_model in related_objs:
             # Retrieve all related objects
             try:
-                obj = getattr(self, objs_model)
+                objs_query = getattr(self, objs_model)
+                objs = objs_query.all()
+
+                for obj in objs:
+                    # Checking if inherits from logicaldelete
+                    if issubclass(obj.__class__, Model):
+                        obj.undelete()
             except ObjectDoesNotExist, AttributeError:
                 # The attribute  or relation  may not
                 # be instanciated.
                 pass
-
-            # Checking if inherits from logicaldelete
-            if not issubclass(obj.__class__, Model):
-                break
-            obj.undelete()
 
         self.date_removed = None
         self.save()
