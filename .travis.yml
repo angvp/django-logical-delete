@@ -13,7 +13,7 @@ install:
   - pip install -q Django==$DJANGO --use-mirrors
   - pip install . --use-mirrors
 script:
-  - python manage.py test geoposition
+  - python manage.py test logicaldelete
 matrix:
   exclude:
     # Django doesn't support following combinations
