@@ -1,19 +1,17 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 VERSION = __import__("logicaldelete").__version__
 
  
 setup(
-    name = "django-logicaldelete",
+    name = 'django-logicaldelete',
     version = VERSION,
-    author = "Patrick Altman",
-    author_email = "paltman@gmail.com",
-    url = "http://github.com/paltman/django-logicaldelete",
-    description = "a base model that provides built in logical delete functionality",
+    author = u'Angel Velasquez, Agustín Cangiani',
+    author_email = 'angvp@archlinux.org, cangiani@gmail.com',
+    url = 'http://www.routeatlas.com',
+    description = u' '.join(__import__('logicaldelete').__doc__.splitlines()).strip(),
     long_description = open("README.rst").read(),
-    packages = [
-        "logicaldelete"
-    ],
+    packages = find_packages()
     license="BSD",
     classifiers = [
         "Development Status :: 4 - Beta",
