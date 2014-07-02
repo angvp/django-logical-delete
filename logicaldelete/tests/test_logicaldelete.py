@@ -10,6 +10,9 @@ class ModelTest(Model):
 class LogicalDeleteTestCase(SimpleTestCase):
 
     def test_init_fields(self):
+        """
+        First test
+        """
         obj = ModelTest(name='test_name')
 
         self.assertIsNotNone(obj.date_created)
