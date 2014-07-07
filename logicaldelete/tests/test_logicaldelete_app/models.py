@@ -6,4 +6,19 @@ class ModelTest(Model):
     name = models.CharField(max_length=50)
 
 
+class ModelTestFKLogical(Model):
+    """
+    ForeignKey class to ModelTest that inherits from
+    logical detele
+    """
+    child_name = models.CharField(max_length=50)
+    father = models.ForeignKey(ModelTest)
 
+
+class ModelTestFKNotLogical(models.Model):
+    """
+    ForeignKey class to ModelTest that inherits from
+    logical detele
+    """
+    child_name = models.CharField(max_length=50)
+    father = models.ForeignKey(ModelTest)
