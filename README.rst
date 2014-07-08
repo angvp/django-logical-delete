@@ -32,7 +32,7 @@ Using django-logicaldelete
 Using the app is pretty simple:
 
 #. add `logicaldelete` to your INSTALLED_APPS
-#. Inherit from `logicaldelete.models.Model` for all models that you wish to 
+#. Inherit from `logicaldelete.models.Model` for all models that you 11wish to
    share in this functionality.
 #. Create and/or Register admins for each of these models using `logicaldelete.admin.ModelAdmin`
 

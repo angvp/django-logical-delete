@@ -45,7 +45,7 @@ class Model(models.Model):
                     # Checking if inherits from logicaldelete
                     if issubclass(obj.__class__, Model):
                         obj.delete()
-            except ObjectDoesNotExist, AttributeError:
+            except:
                 # The attribute  or relation  may not
                 # be instanciated.
                 pass
@@ -69,15 +69,15 @@ class Model(models.Model):
             # Retrieve all related objects
             try:
                 objs_query = getattr(self, objs_model)
-                objs = objs_query.all()
+                objs = objs_query.all_with_deleted()
 
                 for obj in objs:
                     # Checking if inherits from logicaldelete
                     if issubclass(obj.__class__, Model):
                         obj.undelete()
-            except ObjectDoesNotExist, AttributeError:
+            except:
                 # The attribute  or relation  may not
-                # be instanciated.
+                # be instanciated or doesnt have the Attributes
                 pass
 
         self.date_removed = None
