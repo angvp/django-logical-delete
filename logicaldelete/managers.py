@@ -10,16 +10,21 @@ class LogicalDeletedManager(models.Manager):
     provides named querysets for getting the deleted objects.
     """
     
-    def get_query_set(self):
+    def get_queryset(self):
         if self.model:
-            return LogicalDeleteQuerySet(self.model, using=self._db).filter(
-                date_removed__isnull=True
-            )
+            return self.all_with_deleted().filter(date_removed__isnull=True)
     
     def all_with_deleted(self):
         if self.model:
-            return super(LogicalDeletedManager, self).get_query_set()
-    
+            qs = LogicalDeleteQuerySet(self.model, using=self._db)
+            try:
+                # For related managers
+                qs = qs.filter(**self.core_filters)
+            except AttributeError:
+                # The object does no contain filters
+                pass
+            return qs
+
     def only_deleted(self):
         if self.model:
             return super(LogicalDeletedManager, self).get_query_set().filter(

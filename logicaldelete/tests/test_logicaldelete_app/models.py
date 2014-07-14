@@ -22,3 +22,12 @@ class ModelTestFKNotLogical(models.Model):
     """
     child_name = models.CharField(max_length=50)
     father = models.ForeignKey(ModelTest)
+
+
+class ModelTestManagersNotLogical(models.Model):
+    """
+    ForeignKey class to ModelTestFKNotLogical
+    that does not inherits from logical detele
+    """
+    double_child_name = models.CharField(max_length=50)
+    father = models.ForeignKey(ModelTestFKNotLogical)
