@@ -91,8 +91,8 @@ class Model(models.Model):
             # Patch for reupdating the DeletedTime
             self.date_removed = timezone.now()
 
-        super(Model, self).save(force_insert=False, force_update=False,
-                                using=None, update_fields=None)
+        super(Model, self).save(force_insert, force_update, using,
+                                update_fields)
 
     class Meta:
         abstract = True

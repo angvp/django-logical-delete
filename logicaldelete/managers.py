@@ -38,3 +38,7 @@ class LogicalDeletedManager(models.Manager):
         if "pk" in kwargs:
             return self.all_with_deleted().filter(*args, **kwargs)
         return self.get_query_set().filter(*args, **kwargs)
+
+    def using(self, *args, **kwargs):
+        # Just in case you are thinking to user Mixins
+        return self.all_with_deleted().using(*args, **kwargs)
